@@ -1,0 +1,23 @@
+import java.util.*;
+
+ public class power_set {
+    public List<List<Integer>> Power_set(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(nums, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backtrack(int[] nums, int index, List<Integer> current, List<List<Integer>> result) {
+
+        result.add(new ArrayList<>(current));
+
+        for (int i = index; i < nums.length; i++) {
+
+            current.add(nums[i]);
+
+            backtrack(nums, i + 1, current, result);
+
+            current.remove(current.size() - 1);
+        }
+    }
+}
