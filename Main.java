@@ -1,23 +1,23 @@
+import java.util.*;
+
 class Main {
-    public double myPow(double x, int n) {
-        long N = n;  // prevent overflow
-        
-        if (N < 0) {
-            x = 1 / x;
-            N = -N;
+    public int largestRectangleArea(int[] heights) {
+        Stack<Integer> st = new Stack<>();
+        int maxArea = 0;
+        int n = heights.length;
+
+        for (int i = 0; i <= n; i++) {
+            int currHeight = (i == n) ? 0 : heights[i];
+
+            while (!st.isEmpty() && currHeight < heights[st.peek()]) {
+                int h = heights[st.pop()];
+                int right = i;
+                int left = st.isEmpty() ? -1 : st.peek();
+                int width = right - left - 1;
+                maxArea = Math.max(maxArea, h * width);
+            }
+            st.push(i);
         }
-        
-        return power(x, N);
-    }
-
-    private double power(double x, long n) {
-        if (n == 0) return 1;
-
-        double half = power(x, n / 2);
-
-        if (n % 2 == 0)
-            return half * half;
-        else
-            return half * half * x;
+        return maxArea;
     }
 }
